@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Zap, Camera, Upload, CheckCircle2, AlertTriangle, Info, ScanLine } from 'lucide-react'
 import { cn } from '../lib/utils'
+import { GlassCard } from './ui/GlassCard'
 
 export function DiagnosticScanner() {
   const [scanning, setScanning] = useState(false)
@@ -25,7 +26,7 @@ export function DiagnosticScanner() {
   }, [scanning, progress])
 
   return (
-    <div className="glass-card rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden group border-white/5 hover:border-primary/20 transition-all">
+    <GlassCard className="rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden group border-white/5 hover:border-primary/20 transition-all">
       <div className="absolute top-0 right-0 p-8 text-white/5 opacity-20 group-hover:opacity-40 transition-opacity">
         <Zap size={200} />
       </div>
@@ -136,7 +137,7 @@ export function DiagnosticScanner() {
           </AnimatePresence>
         </div>
       </div>
-    </div>
+    </GlassCard>
   )
 }
 

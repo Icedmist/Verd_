@@ -4,6 +4,7 @@ import { GroundTruthInsights } from './GroundTruthInsights'
 import { Onboarding } from './Onboarding'
 import { motion } from 'framer-motion'
 import { Info, ArrowRight } from 'lucide-react'
+import { GlassCard } from './ui/GlassCard'
 
 export function Dashboard({ theme }: { theme: 'bitget' | 'greenfamily' }) {
   const [showOnboarding, setShowOnboarding] = useState(false)
@@ -45,8 +46,9 @@ export function Dashboard({ theme }: { theme: 'bitget' | 'greenfamily' }) {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
-          className="lg:col-span-2 glass-card rounded-[2.5rem] p-8 border-white/5 bg-white/5"
+          className="lg:col-span-2"
         >
+          <GlassCard className="h-full border-white/5 bg-white/5">
           <div className="flex items-center gap-3 mb-4 text-primary">
             <Info size={24} />
             <span className="font-bold uppercase tracking-widest text-xs">Mission Profile</span>
@@ -59,6 +61,7 @@ export function Dashboard({ theme }: { theme: 'bitget' | 'greenfamily' }) {
               <motion.div animate={{ x: ['-100%', '100%'] }} transition={{ duration: 2, repeat: Infinity }} className="h-full bg-primary w-1/3" />
             </div>
           </div>
+          </GlassCard>
         </motion.div>
       </div>
 

@@ -1,5 +1,36 @@
 @import "tailwindcss";
 
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-rainbow: rainbow-move 5s ease infinite;
+  --animate-shine: shine 2s linear infinite;
+
+  @keyframes rainbow-move {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+  }
+  @keyframes shine {
+    from { transform: translateX(-100%) }
+    to { transform: translateX(100%) }
+  }
+}
+
 @layer base {
 :root {
     --background: 240 10% 4%;
@@ -47,28 +78,26 @@
   }
 }
 
-@layer utilities {
-  .bg-rainbow {
-    background: linear-gradient(
-      90deg,
-      #ff0000,
-      #ff7f00,
-      #ffff00,
-      #00ff00,
-      #0000ff,
-      #4b0082,
-      #8f00ff
-    );
-    background-size: 200% 200%;
-  }
+@utility bg-rainbow {
+  background: linear-gradient(
+    90deg,
+    #ff0000,
+    #ff7f00,
+    #ffff00,
+    #00ff00,
+    #0000ff,
+    #4b0082,
+    #8f00ff
+  );
+  background-size: 200% 200%;
+}
 
-  .text-gradient-rainbow {
-    @apply bg-rainbow bg-clip-text text-transparent animate-rainbow;
-  }
+@utility text-gradient-rainbow {
+  @apply bg-rainbow bg-clip-text text-transparent animate-rainbow;
+}
 
-  .glass-card {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl;
-  }
+@utility glass-card {
+  @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl;
 }
 
 body {

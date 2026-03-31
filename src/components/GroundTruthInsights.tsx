@@ -1,6 +1,7 @@
 import { MapPin, Activity, Droplets, Wind, ClipboardCheck, FlaskConical, Sprout } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { cn } from '../lib/utils'
+import { GlassCard } from './ui/GlassCard'
 
 export function GroundTruthInsights() {
   return (
@@ -57,7 +58,12 @@ export function GroundTruthInsights() {
           </div>
         </div>
 
-        <div className="glass-card rounded-[2rem] p-8 border-primary/20 bg-primary/5">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="lg:col-span-1"
+        >
+          <GlassCard className="h-full rounded-[2rem] border-primary/20 bg-primary/5">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-3 rounded-2xl bg-primary/20 text-primary">
               <ClipboardCheck size={24} />
@@ -70,7 +76,8 @@ export function GroundTruthInsights() {
             <ProtocolItem step="03" text="Monitor neural feedback in 48 hours" />
             <ProtocolItem step="04" text="Update ground-truth registry" />
           </ul>
-        </div>
+          </GlassCard>
+        </motion.div>
       </div>
     </section>
   )
@@ -82,19 +89,21 @@ function MetricCard({ icon, label, value, subValue, delay }: { icon: React.React
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.5 }}
-      className="glass-card rounded-[2rem] p-6 hover:translate-y-[-4px] transition-transform border-white/5 hover:border-primary/30 group"
+      className="h-full"
     >
+      <GlassCard className="h-full rounded-[2rem] p-6 hover:translate-y-[-4px] transition-transform border-white/5 hover:border-primary/30 group">
       <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300">{icon}</div>
       <div className="text-white/40 text-sm mb-1">{label}</div>
       <div className="text-2xl font-bold mb-1 tracking-tight">{value}</div>
       <div className="text-white/20 text-[10px] uppercase tracking-widest font-bold">{subValue}</div>
+      </GlassCard>
     </motion.div>
   )
 }
 
 function RecipeCard({ title, description, ingredients, impact, icon }: { title: string, description: string, ingredients: string[], impact: string, icon: React.ReactNode }) {
   return (
-    <div className="glass-card rounded-3xl p-6 border-white/5 hover:border-primary/20 transition-colors">
+    <GlassCard className="rounded-3xl p-6 border-white/5 hover:border-primary/20 transition-colors">
       <div className="flex justify-between items-start mb-4">
         <div className="p-3 rounded-2xl bg-white/5">{icon}</div>
         <span className="text-[10px] font-bold px-2 py-1 rounded bg-primary/10 text-primary uppercase tracking-tighter">{impact}</span>
@@ -109,7 +118,7 @@ function RecipeCard({ title, description, ingredients, impact, icon }: { title: 
           </div>
         ))}
       </div>
-    </div>
+    </GlassCard>
   )
 }
 

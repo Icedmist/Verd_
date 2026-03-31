@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ThemeToggle } from './components/ThemeToggle'
-import { RainbowBackground } from './components/RainbowBackground'
+import { LiquidMetalBackground } from './components/LiquidMetalBackground'
 import { NeuralBackground } from './components/NeuralBackground'
 import { Dashboard } from './components/Dashboard'
 
@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div className="min-h-screen text-white font-sans selection:bg-primary/30 selection:text-white overflow-x-hidden">
-      {theme === 'bitget' ? <RainbowBackground /> : <NeuralBackground />}
+      {theme === 'bitget' ? <LiquidMetalBackground /> : <NeuralBackground />}
       
       <ThemeToggle />
 

@@ -96,49 +96,86 @@ export function Dashboard({ theme, currentView }: DashboardProps) {
             {/* Technology Hub & Usability */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-32">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-                <GlassCard className="group hover:border-primary/30 transition-all p-8 flex flex-col h-full bg-white/5 border-white/5">
+                <GlassCard className="group hover:border-primary/30 transition-all p-8 flex flex-col h-full bg-black/40 border-white/5">
                   <div className="p-3 rounded-2xl bg-primary/10 text-primary w-fit mb-6 group-hover:scale-110 transition-transform">
                     <Drone size={28} />
                   </div>
                   <h3 className="text-xl font-bold mb-3 italic">Drone Agri-Tech</h3>
                   <p className="text-white/40 text-sm leading-relaxed mb-6">
-                    VERD integrates seamlessly with agricultural drones, enabling large-scale field analysis and precision crop monitoring from above.
+                    Autonomous field monitoring with high-precision drone integration. Track crop health across hectares in minutes using VERD's aerial-optimized neural engines.
                   </p>
-                  <div className="mt-auto pt-4 flex items-center text-[10px] font-bold uppercase tracking-widest text-primary/60">
-                    LEARN MORE <ArrowRight size={12} className="ml-2" />
+                  <ul className="text-[10px] text-white/20 space-y-2 mb-6 font-bold uppercase tracking-widest">
+                    <li className="flex items-center gap-2 text-primary/60"><Zap size={10} /> RTK GPS Support</li>
+                    <li className="flex items-center gap-2"><Zap size={10} /> Multi-Spectral Imaging</li>
+                    <li className="flex items-center gap-2"><Zap size={10} /> Payload Integration</li>
+                  </ul>
+                  <div className="mt-auto pt-4 flex items-center text-[10px] font-bold uppercase tracking-widest text-primary/60 hover:text-primary cursor-pointer transition-colors">
+                    EXPLORE AERIAL SUITE <ArrowRight size={12} className="ml-2" />
                   </div>
                 </GlassCard>
               </motion.div>
 
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-                <GlassCard className="group hover:border-primary/30 transition-all p-8 flex flex-col h-full bg-white/5 border-white/5">
+                <GlassCard className="group hover:border-primary/30 transition-all p-8 flex flex-col h-full bg-black/40 border-white/5">
                   <div className="p-3 rounded-2xl bg-primary/10 text-primary w-fit mb-6 group-hover:scale-110 transition-transform">
                     <Globe size={28} />
                   </div>
                   <h3 className="text-xl font-bold mb-3 italic">Open Source Model</h3>
                   <p className="text-white/40 text-sm leading-relaxed mb-6">
-                    Built for transparency. Our core pathology models are open source, allowing developers and researchers to audit and contribute to the future of farming.
+                    VERD belongs to the community. Participate in the future of decentralized agricultural AI by contributing to our pathology library and model training.
                   </p>
+                  <ul className="text-[10px] text-white/20 space-y-2 mb-6 font-bold uppercase tracking-widest">
+                    <li className="flex items-center gap-2 text-primary/60"><Zap size={10} /> MIT Licensed</li>
+                    <li className="flex items-center gap-2"><Zap size={10} /> 40k+ Training Datasets</li>
+                    <li className="flex items-center gap-2"><Zap size={10} /> Community Support</li>
+                  </ul>
                   <a href="https://github.com/icedmist/verd" className="mt-auto pt-4 flex items-center text-[10px] font-bold uppercase tracking-widest text-primary">
-                    VIEW REPOSITORY <ArrowRight size={12} className="ml-2" />
+                    CONTRIBUTE ON GITHUB <ArrowRight size={12} className="ml-2" />
                   </a>
                 </GlassCard>
               </motion.div>
 
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-                <GlassCard className="group hover:border-primary/30 transition-all p-8 flex flex-col h-full bg-white/5 border-white/5">
+                <GlassCard className="group hover:border-primary/30 transition-all p-8 flex flex-col h-full bg-black/40 border-white/5">
                   <div className="p-3 rounded-2xl bg-primary/10 text-primary w-fit mb-6 group-hover:scale-110 transition-transform">
                     <Code2 size={28} />
                   </div>
                   <h3 className="text-xl font-bold mb-3 italic">Dev-First Design</h3>
                   <p className="text-white/40 text-sm leading-relaxed mb-6">
-                    A platform built for both farmers and developers. Use our Smart API to integrate high-fidelity crop diagnostics into your own agricultural software.
+                    Built by designers, for developers. Our headless API allows for infinite customization and integration into existing ERP frameworks and mobile tools.
                   </p>
-                  <div className="mt-auto pt-4 flex items-center text-[10px] font-bold uppercase tracking-widest text-white/20">
-                    API DOCS SOON <ArrowRight size={12} className="ml-2" />
+                  <ul className="text-[10px] text-white/20 space-y-2 mb-6 font-bold uppercase tracking-widest">
+                    <li className="flex items-center gap-2 text-primary/60"><Zap size={10} /> REST & gRPC API</li>
+                    <li className="flex items-center gap-2"><Zap size={10} /> Webhook Notifications</li>
+                    <li className="flex items-center gap-2"><Zap size={10} /> SDKs (Go, TS, Python)</li>
+                  </ul>
+                  <div className="mt-auto pt-4 flex items-center text-[10px] font-bold uppercase tracking-widest text-white/20 hover:text-white cursor-pointer transition-colors">
+                    REQUEST API ACCESS <ArrowRight size={12} className="ml-2" />
                   </div>
                 </GlassCard>
               </motion.div>
+            </div>
+
+            {/* Embedded Onboarding Flow */}
+            <div className="mb-32">
+              <div className="mb-12">
+                <h2 className="text-4xl font-bold italic tracking-tighter">Your Journey with <span className="text-primary not-italic">VERD</span></h2>
+                <p className="text-white/40 text-sm">Follow these simple steps to master intelligent crop diagnostics.</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {[
+                  { step: '01', title: 'Upload Scan', desc: 'Provide a high-res photo of the leaf.' },
+                  { step: '02', title: 'Neural Analysis', desc: 'AI processes the pathology markers.' },
+                  { step: '03', title: 'Get Insights', desc: 'Receive immediate treatment protocols.' },
+                  { step: '04', title: 'Track Health', desc: 'Monitor trends over the entire harvest.' }
+                ].map((item, i) => (
+                  <GlassCard key={i} className="p-6 border-white/5 bg-black/20 hover:bg-black/40 transition-all">
+                    <span className="text-4xl font-black text-white/5 leading-none block mb-4 italic">{item.step}</span>
+                    <h4 className="font-bold mb-2 text-sm text-primary">{item.title}</h4>
+                    <p className="text-white/40 text-xs leading-relaxed">{item.desc}</p>
+                  </GlassCard>
+                ))}
+              </div>
             </div>
             
             <div className="space-y-32">

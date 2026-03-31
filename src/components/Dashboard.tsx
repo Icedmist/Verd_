@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import { DiagnosticScanner } from './DiagnosticScanner'
 import { GroundTruthInsights } from './GroundTruthInsights'
+import { UserDashboard } from './UserDashboard'
 import { Onboarding } from './Onboarding'
 import { Auth } from './Auth'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Info, ArrowRight, Plane as Drone, Github, Code2, ShieldCheck, Zap } from 'lucide-react'
+import { Info, ArrowRight, Plane as Drone, Globe, Code2, ShieldCheck, Zap } from 'lucide-react'
 import { GlassCard } from './ui/GlassCard'
 
 interface DashboardProps {
   theme: 'bitget' | 'greenfamily'
-  currentView: 'home' | 'scan' | 'insights'
+  currentView: 'home' | 'scan' | 'insights' | 'dashboard'
 }
 
 export function Dashboard({ theme, currentView }: DashboardProps) {
@@ -109,7 +110,7 @@ export function Dashboard({ theme, currentView }: DashboardProps) {
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
                 <GlassCard className="group hover:border-primary/30 transition-all p-8 flex flex-col h-full bg-white/5 border-white/5">
                   <div className="p-3 rounded-2xl bg-primary/10 text-primary w-fit mb-6 group-hover:scale-110 transition-transform">
-                    <Github size={28} />
+                    <Globe size={28} />
                   </div>
                   <h3 className="text-xl font-bold mb-3 italic">Open Source Model</h3>
                   <p className="text-white/40 text-sm leading-relaxed mb-6">
@@ -166,6 +167,18 @@ export function Dashboard({ theme, currentView }: DashboardProps) {
             className="pt-20"
           >
              <GroundTruthInsights />
+          </motion.div>
+        )}
+        {currentView === 'dashboard' && (
+          <motion.div
+            key="dashboard"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+            className="pt-20"
+          >
+             <UserDashboard />
           </motion.div>
         )}
       </AnimatePresence>

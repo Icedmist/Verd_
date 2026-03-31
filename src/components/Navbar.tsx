@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sprout, Scan, BarChart3, User, Menu, X, Zap, Leaf } from 'lucide-react'
+import { Sprout, Scan, BarChart3, User, Menu, X, Zap, Leaf, Activity } from 'lucide-react'
 import { cn } from '../lib/utils'
 
 interface NavbarProps {
-  currentView: 'home' | 'scan' | 'insights'
-  setView: (view: 'home' | 'scan' | 'insights') => void
+  currentView: 'home' | 'scan' | 'insights' | 'dashboard'
+  setView: (view: 'home' | 'scan' | 'insights' | 'dashboard') => void
   theme: 'bitget' | 'greenfamily'
   setTheme: (theme: 'bitget' | 'greenfamily') => void
 }
@@ -20,10 +20,11 @@ export function Navbar({ currentView, setView, theme, setTheme }: NavbarProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinks: { name: string, icon: React.ReactNode, id: 'home' | 'scan' | 'insights' }[] = [
+  const navLinks: { name: string, icon: React.ReactNode, id: 'home' | 'scan' | 'insights' | 'dashboard' }[] = [
     { name: 'Home', icon: <Sprout size={18} />, id: 'home' },
     { name: 'Scan', icon: <Scan size={18} />, id: 'scan' },
     { name: 'Insights', icon: <BarChart3 size={18} />, id: 'insights' },
+    { name: 'Dashboard', icon: <Activity size={18} />, id: 'dashboard' },
   ]
 
   const toggleTheme = () => {

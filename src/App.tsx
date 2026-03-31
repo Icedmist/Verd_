@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { ThemeToggle } from './components/ThemeToggle'
 import { Navbar } from './components/Navbar'
 import { LiquidMetalBackground } from './components/LiquidMetalBackground'
 import { NeuralBackground } from './components/NeuralBackground'
@@ -7,7 +6,7 @@ import { Dashboard } from './components/Dashboard'
 
 function App() {
   const [theme, setTheme] = useState<'bitget' | 'greenfamily'>('bitget')
-  const [currentView, setCurrentView] = useState<'home' | 'scan' | 'insights'>('home')
+  const [currentView, setCurrentView] = useState<'home' | 'scan' | 'insights' | 'dashboard'>('home')
 
   // Listen for theme changes from the Root element classes
   useEffect(() => {

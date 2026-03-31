@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { DiagnosticScanner } from './DiagnosticScanner'
 import { GroundTruthInsights } from './GroundTruthInsights'
 import { UserDashboard } from './UserDashboard'
+import { ProfileSettings } from './ProfileSettings'
+import { ScanHistory } from './ScanHistory'
+import { LearningCenter } from './LearningCenter'
 import { Onboarding } from './Onboarding'
 import { Auth } from './Auth'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -10,7 +13,7 @@ import { GlassCard } from './ui/GlassCard'
 
 interface DashboardProps {
   theme: 'bitget' | 'greenfamily'
-  currentView: 'home' | 'scan' | 'insights' | 'dashboard'
+  currentView: 'home' | 'scan' | 'insights' | 'dashboard' | 'profile' | 'history' | 'learning'
 }
 
 export function Dashboard({ theme, currentView }: DashboardProps) {
@@ -179,6 +182,44 @@ export function Dashboard({ theme, currentView }: DashboardProps) {
             className="pt-20"
           >
              <UserDashboard />
+          </motion.div>
+        )}
+        {currentView === 'profile' && (
+          <motion.div
+            key="profile"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+            className="pt-20"
+          >
+             <ProfileSettings />
+          </motion.div>
+        )}
+
+        {currentView === 'history' && (
+          <motion.div
+            key="history"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+            className="pt-20"
+          >
+             <ScanHistory />
+          </motion.div>
+        )}
+
+        {currentView === 'learning' && (
+          <motion.div
+            key="learning"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+            className="pt-20"
+          >
+             <LearningCenter />
           </motion.div>
         )}
       </AnimatePresence>

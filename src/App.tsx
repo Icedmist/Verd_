@@ -6,7 +6,7 @@ import { Dashboard } from './components/Dashboard'
 
 function App() {
   const [theme, setTheme] = useState<'bitget' | 'greenfamily'>('bitget')
-  const [currentView, setCurrentView] = useState<'home' | 'scan' | 'insights' | 'dashboard'>('home')
+  const [currentView, setCurrentView] = useState<'home' | 'scan' | 'insights' | 'dashboard' | 'profile' | 'history' | 'learning'>('home')
 
   // Listen for theme changes from the Root element classes
   useEffect(() => {

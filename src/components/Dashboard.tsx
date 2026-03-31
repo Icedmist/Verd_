@@ -2,16 +2,24 @@ import { useState } from 'react'
 import { DiagnosticScanner } from './DiagnosticScanner'
 import { GroundTruthInsights } from './GroundTruthInsights'
 import { Onboarding } from './Onboarding'
+import { Auth } from './Auth'
 import { motion } from 'framer-motion'
 import { Info, ArrowRight } from 'lucide-react'
 import { GlassCard } from './ui/GlassCard'
 
 export function Dashboard({ theme }: { theme: 'bitget' | 'greenfamily' }) {
   const [showOnboarding, setShowOnboarding] = useState(false)
+  const [showAuth, setShowAuth] = useState(false)
+
+  const handleOnboardingComplete = () => {
+    setShowOnboarding(false)
+    setShowAuth(true)
+  }
 
   return (
     <main className="container mx-auto px-6 py-12 lg:py-24 relative">
-      <Onboarding isOpen={showOnboarding} onClose={() => setShowOnboarding(false)} />
+      <Onboarding isOpen={showOnboarding} onClose={handleOnboardingComplete} />
+      <Auth isOpen={showAuth} onClose={() => setShowAuth(false)} />
 
       {/* Hero Section */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 mb-32 items-end">

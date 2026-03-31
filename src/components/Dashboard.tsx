@@ -4,7 +4,7 @@ import { GroundTruthInsights } from './GroundTruthInsights'
 import { Onboarding } from './Onboarding'
 import { Auth } from './Auth'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Info, ArrowRight } from 'lucide-react'
+import { Info, ArrowRight, Plane as Drone, Github, Code2, ShieldCheck, Zap } from 'lucide-react'
 import { GlassCard } from './ui/GlassCard'
 
 interface DashboardProps {
@@ -84,6 +84,54 @@ export function Dashboard({ theme, currentView }: DashboardProps) {
                     <div className="h-0.5 flex-1 bg-primary/20 rounded-full overflow-hidden">
                       <motion.div animate={{ x: ['-100%', '100%'] }} transition={{ duration: 2, repeat: Infinity }} className="h-full bg-primary w-1/3" />
                     </div>
+                  </div>
+                </GlassCard>
+              </motion.div>
+            </div>
+
+            {/* Technology Hub & Usability */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-32">
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+                <GlassCard className="group hover:border-primary/30 transition-all p-8 flex flex-col h-full bg-white/5 border-white/5">
+                  <div className="p-3 rounded-2xl bg-primary/10 text-primary w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <Drone size={28} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 italic">Drone Agri-Tech</h3>
+                  <p className="text-white/40 text-sm leading-relaxed mb-6">
+                    VERD integrates seamlessly with agricultural drones, enabling large-scale field analysis and precision crop monitoring from above.
+                  </p>
+                  <div className="mt-auto pt-4 flex items-center text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                    LEARN MORE <ArrowRight size={12} className="ml-2" />
+                  </div>
+                </GlassCard>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                <GlassCard className="group hover:border-primary/30 transition-all p-8 flex flex-col h-full bg-white/5 border-white/5">
+                  <div className="p-3 rounded-2xl bg-primary/10 text-primary w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <Github size={28} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 italic">Open Source Model</h3>
+                  <p className="text-white/40 text-sm leading-relaxed mb-6">
+                    Built for transparency. Our core pathology models are open source, allowing developers and researchers to audit and contribute to the future of farming.
+                  </p>
+                  <a href="https://github.com/icedmist/verd" className="mt-auto pt-4 flex items-center text-[10px] font-bold uppercase tracking-widest text-primary">
+                    VIEW REPOSITORY <ArrowRight size={12} className="ml-2" />
+                  </a>
+                </GlassCard>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                <GlassCard className="group hover:border-primary/30 transition-all p-8 flex flex-col h-full bg-white/5 border-white/5">
+                  <div className="p-3 rounded-2xl bg-primary/10 text-primary w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <Code2 size={28} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 italic">Dev-First Design</h3>
+                  <p className="text-white/40 text-sm leading-relaxed mb-6">
+                    A platform built for both farmers and developers. Use our Smart API to integrate high-fidelity crop diagnostics into your own agricultural software.
+                  </p>
+                  <div className="mt-auto pt-4 flex items-center text-[10px] font-bold uppercase tracking-widest text-white/20">
+                    API DOCS SOON <ArrowRight size={12} className="ml-2" />
                   </div>
                 </GlassCard>
               </motion.div>

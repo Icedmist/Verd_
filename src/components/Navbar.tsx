@@ -53,8 +53,8 @@ export function Navbar({ currentView, setView, theme, setTheme }: NavbarProps) {
           className="flex items-center gap-2 group cursor-pointer"
           onClick={() => setView('home')}
         >
-          <div className="p-2 rounded-xl bg-primary/20 text-primary group-hover:rotate-12 transition-transform">
-            <Sprout size={24} />
+          <div className="p-1.5 rounded-xl bg-primary/20 group-hover:scale-110 transition-transform">
+            <img src="/logo.png" alt="VERD" className="w-8 h-8 object-contain" />
           </div>
           <span className="text-2xl font-bold tracking-tighter italic text-white uppercase">VERD</span>
         </div>

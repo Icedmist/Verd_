@@ -59,14 +59,14 @@ export function Dashboard({ theme, currentView }: DashboardProps) {
                 </div>
                 
                 <h1 className="text-7xl md:text-[10rem] font-bold tracking-tighter mb-10 leading-[0.8] italic">
-                  <span className="text-white">VERD</span>
+                  <span className="text-white">NEURAL</span>
                   <br />
-                  <span className="text-white/20 not-italic font-black">AI</span> 
-                  <span className="text-white/60"> FARMING</span>
+                  <span className="text-white/20 not-italic font-black">AGRI</span> 
+                  <span className="text-white/60"> STACK</span>
                 </h1>
                 
                 <p className="text-xl md:text-2xl text-white/40 max-w-2xl leading-relaxed font-light">
-                  Helping your fields flourish with smart analysis and real-time advice for a better harvest.
+                  Empowering the modern farmer with real-time neural diagnostics and high-fidelity field insights.
                 </p>
               </motion.div>
 
@@ -76,13 +76,13 @@ export function Dashboard({ theme, currentView }: DashboardProps) {
                 transition={{ delay: 0.4 }}
                 className="lg:col-span-2"
               >
-                <GlassCard className="h-full border-white/5 bg-white/5">
+                <GlassCard className="h-full border-white/5 bg-black/40">
                   <div className="flex items-center gap-3 mb-4 text-primary">
-                    <Info size={24} />
-                    <span className="font-bold uppercase tracking-widest text-xs">Our Mission</span>
+                    <ShieldCheck size={24} />
+                    <span className="font-bold uppercase tracking-widest text-xs">Agrarian Sovereignty</span>
                   </div>
                   <p className="text-white/60 leading-relaxed text-sm mb-6">
-                    VERD is an AI-powered assistant designed to spot crop issues with simple leaf scans. Our goal is to help farmers grow more by providing smart, local advice.
+                    VERD isn't just a tool; it's a decentralized intelligence layer for your harvest. We provide the ground-truth data you need to ensure food security and sustainable growth.
                   </p>
                   <div className="flex gap-4">
                     <div className="h-0.5 flex-1 bg-primary/20 rounded-full overflow-hidden">

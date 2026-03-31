@@ -19,8 +19,8 @@ export function LiquidMetalBackground() {
       <LiquidMetal
         width="100%"
         height="100%"
-        colorBack="#00042e"
-        colorTint="#5b4dc7"
+        colorBack="#0d0f14"
+        colorTint="#00D6B1"
         repetition={4}
         softness={0.45}
         shiftRed={-0.5}

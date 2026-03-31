@@ -41,7 +41,7 @@ export function NeuralBackground() {
       draw(ctx: CanvasRenderingContext2D) {
         ctx.beginPath()
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(34, 197, 94, 0.5)'
+        ctx.fillStyle = 'rgba(74, 222, 128, 0.8)'
         ctx.fill()
       }
     }
@@ -70,8 +70,8 @@ export function NeuralBackground() {
 
           if (dist < connectionDistance) {
             ctx.beginPath()
-            ctx.strokeStyle = `rgba(34, 197, 94, ${1 - dist / connectionDistance})`
-            ctx.lineWidth = 0.5
+            ctx.strokeStyle = `rgba(74, 222, 128, ${0.4 * (1 - dist / connectionDistance)})`
+            ctx.lineWidth = 1.5
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
             ctx.stroke()

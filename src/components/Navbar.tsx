@@ -60,8 +60,9 @@ export function Navbar({ currentView, setView, theme, setTheme }: NavbarProps) {
           className="flex items-center gap-2 group cursor-pointer"
           onClick={() => setView('home')}
         >
-          <div className="p-2 rounded-2xl bg-primary/20 group-hover:scale-110 transition-all shadow-[0_0_30px_rgba(0,214,177,0.4)] border border-primary/20">
-            <img src="/logo.png" alt="VERD" className="w-10 h-10 object-contain brightness-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
+          <div className="p-2.5 rounded-2xl bg-white/[0.03] group-hover:bg-white/[0.08] group-hover:scale-110 transition-all shadow-[0_0_40px_rgba(0,214,177,0.3)] border border-white/5 relative overflow-hidden">
+            <div className="absolute inset-0 bg-primary/20 blur-xl group-hover:bg-primary/40 transition-all" />
+            <img src="/logo.png" alt="VERD" className="w-10 h-10 object-contain relative z-10 brightness-125 contrast-125 drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]" />
           </div>
           <span className="text-2xl font-bold tracking-tighter italic text-white uppercase">VERD</span>
         </div>

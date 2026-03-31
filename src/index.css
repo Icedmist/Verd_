@@ -97,9 +97,9 @@
 }
 
 @utility glass-card {
-  @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl;
+  @apply bg-black/80 backdrop-blur-2xl border border-white/5 shadow-2xl;
 }
 
 body {
-  @apply bg-background text-foreground antialiased;
+  @apply bg-[#030406] text-foreground antialiased;
 }

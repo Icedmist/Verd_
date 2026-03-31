@@ -9,7 +9,7 @@ export function GroundTruthInsights() {
         <MetricCard 
           icon={<MapPin className="text-red-500" />} 
           label="Region" 
-          value="Gombe State" 
+          value="Regional Profile" 
           subValue="Savannah Belt" 
           delay={0.1}
         />
@@ -42,7 +42,7 @@ export function GroundTruthInsights() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <RecipeCard 
               title="Organic Fungicide Mix"
-              description="Effective against Puccinia sorghi detected in Gombe North clusters."
+              description="Effective against Puccinia sorghi detected in regional biometric clusters."
               ingredients={["Neem Oil (50ml)", "Liquid Soap (10ml)", "Warm Water (1L)"]}
               impact="98% Efficiency"
               icon={<FlaskConical className="text-purple-400" />}

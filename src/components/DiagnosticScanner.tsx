@@ -34,9 +34,9 @@ export function DiagnosticScanner() {
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div className="space-y-8">
           <div>
-            <h2 className="text-4xl font-bold mb-4 tracking-tighter italic">Neural Diagnostics</h2>
+            <h2 className="text-4xl font-bold mb-4 tracking-tighter italic">Crop Health Scan</h2>
             <p className="text-white/60 leading-relaxed max-w-md">
-              Deploying lightweight CNN (MobileNetV3-Large) for localized leaf-level pathological analysis.
+              Use our smart assistant to check your plants for issues. It works instantly and understands your local crops.
             </p>
           </div>
 
@@ -47,7 +47,7 @@ export function DiagnosticScanner() {
                   <div className="p-3 rounded-2xl bg-primary/20 text-primary">
                     {scanning ? <ScanLine className="animate-pulse" /> : <Camera />}
                   </div>
-                  <span className="font-bold text-lg">Initialize Analysis</span>
+                  <span className="font-bold text-lg">Start Scanning</span>
                 </div>
                 <div className="p-2 rounded-xl bg-white/5 text-white/40 group-hover/scan:text-white transition-colors">
                   <Upload size={18} />
@@ -62,7 +62,7 @@ export function DiagnosticScanner() {
                 />
               </div>
               <div className="mt-2 flex justify-between text-[10px] font-mono text-white/40 uppercase tracking-widest">
-                <span>{scanning ? 'Neural Weights Loading...' : 'Ready for input'}</span>
+                <span>{scanning ? 'Analyzing Plant...' : 'Ready to scan'}</span>
                 <span>{progress}%</span>
               </div>
             </div>
@@ -97,7 +97,7 @@ export function DiagnosticScanner() {
                     />
                   )}
                 </div>
-                <p className="font-bold tracking-widest text-xs uppercase">Awaiting Sample Input</p>
+                <p className="font-bold tracking-widest text-xs uppercase">Scan a Leaf to Begin</p>
               </motion.div>
             ) : (
               <motion.div 
@@ -113,12 +113,12 @@ export function DiagnosticScanner() {
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-6 font-mono text-red-500 font-bold text-sm">
                     <AlertTriangle size={18} />
-                    <span>PATHOLOGICAL ALERT [CRITICAL]</span>
+                    <span>DISEASE ALERT [ACTION REQUIRED]</span>
                   </div>
                   
-                  <h3 className="text-3xl font-bold mb-4 tracking-tight">Puccinia sorghi</h3>
+                  <h3 className="text-3xl font-bold mb-4 tracking-tight">Leaf Rust Identified</h3>
                   <p className="text-white/80 mb-8 leading-relaxed text-lg">
-                    Common Rust detected with **98.2% confidence**. Localized climate data models suggest rapid spread potential.
+                    We found **Leaf Rust** on your plant. This can spread quickly in your local climate.
                   </p>
                   
                   <div className="space-y-4">
@@ -127,7 +127,7 @@ export function DiagnosticScanner() {
                       <span>Immediate organic fungicide application required.</span>
                     </div>
                     <button className="w-full py-5 bg-primary text-white font-bold rounded-2xl hover:bg-primary/90 transition-all shadow-[0_15px_40px_rgba(108,58,250,0.4)] flex items-center justify-center gap-2 group">
-                      GENERATE RECIPE
+                      GET TREATMENT PLAN
                       <CheckCircle2 size={18} className="group-hover:translate-x-1 transition-transform" />
                     </button>
                   </div>

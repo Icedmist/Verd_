@@ -6,25 +6,25 @@ import { cn } from '../lib/utils'
 const steps = [
   {
     title: "Welcome to VERD",
-    description: "The next generation of AI-driven agronomy. We bridge the gap between complex biometric data and actionable field interventions.",
+    description: "Your smart assistant for better farming. We turn complex data into simple steps to help your crops thrive.",
     icon: <Sprout className="text-emerald-500" size={48} />,
     color: "emerald"
   },
   {
-    title: "Neural Diagnostics",
-    description: "Identify crop diseases and pests in real-time using our proprietary lightweight CNN models optimized for mobile devices.",
+    title: "Smart Crop Scan",
+    description: "Easily spot plant diseases and pests in seconds using your phone's camera. No internet? No problem.",
     icon: <Microscope className="text-blue-500" size={48} />,
     color: "blue"
   },
   {
-    title: "Ground-Truth Action",
-    description: "Receive precise, localized 'recipes' and protocols for pathological intervention, tailored for the Savannah belt.",
+    title: "Expert Advice",
+    description: "Get precise, easy-to-follow steps and local 'recipes' to fix issues and protect your harvest.",
     icon: <Zap className="text-purple-500" size={48} />,
     color: "purple"
   },
   {
-    title: "Resilient Security",
-    description: "Your agricultural data is protected by off-line resilient architecture and robust encryption protocols.",
+    title: "Safe & Secure",
+    description: "Your farm data is private and secure, built with modern protection that works even when you're offline.",
     icon: <Shield className="text-red-500" size={48} />,
     color: "red"
   }

@@ -34,7 +34,7 @@ export function Dashboard({ theme }: { theme: 'bitget' | 'greenfamily' }) {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
-            <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary/80">EXPLORE ONBOARDING</span>
+            <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary/80">SEE HOW IT WORKS</span>
             <ArrowRight size={14} className="text-primary/60 ml-2" />
           </div>
           
@@ -42,11 +42,11 @@ export function Dashboard({ theme }: { theme: 'bitget' | 'greenfamily' }) {
             <span className="text-white">VERD</span>
             <br />
             <span className="text-white/20 not-italic font-black">AI</span> 
-            <span className="text-white/60"> AGRONOMY</span>
+            <span className="text-white/60"> FARMING</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-white/40 max-w-2xl leading-relaxed font-light">
-            Empowering the Savannah belt with high-fidelity neural diagnostics and real-time ground-truth interventions.
+            Helping your fields flourish with smart analysis and real-time advice for a better harvest.
           </p>
         </motion.div>
 
@@ -59,10 +59,10 @@ export function Dashboard({ theme }: { theme: 'bitget' | 'greenfamily' }) {
           <GlassCard className="h-full border-white/5 bg-white/5">
           <div className="flex items-center gap-3 mb-4 text-primary">
             <Info size={24} />
-            <span className="font-bold uppercase tracking-widest text-xs">Mission Profile</span>
+            <span className="font-bold uppercase tracking-widest text-xs">Our Mission</span>
           </div>
           <p className="text-white/60 leading-relaxed text-sm mb-6">
-            VERD is an AI-driven platform designed to identify crop pathologies with leaf-level precision. Our mission is to stabilize agricultural output through data-driven resilience and localized biometric intelligence.
+            VERD is an AI-powered assistant designed to spot crop issues with simple leaf scans. Our goal is to help farmers grow more by providing smart, local advice.
           </p>
           <div className="flex gap-4">
             <div className="h-0.5 flex-1 bg-primary/20 rounded-full overflow-hidden">

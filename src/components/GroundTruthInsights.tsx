@@ -10,7 +10,7 @@ export function GroundTruthInsights() {
         <MetricCard 
           icon={<MapPin className="text-red-500" />} 
           label="Region" 
-          value="Regional Profile" 
+          value="Your Fields" 
           subValue="Savannah Belt" 
           delay={0.1}
         />
@@ -39,20 +39,20 @@ export function GroundTruthInsights() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <h3 className="text-2xl font-bold tracking-tight">Active Interventions</h3>
+          <h3 className="text-2xl font-bold tracking-tight">How to Protect Your Crops</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <RecipeCard 
               title="Organic Fungicide Mix"
               description="Effective against Puccinia sorghi detected in regional biometric clusters."
               ingredients={["Neem Oil (50ml)", "Liquid Soap (10ml)", "Warm Water (1L)"]}
-              impact="98% Efficiency"
+              impact="98% Effective"
               icon={<FlaskConical className="text-purple-400" />}
             />
             <RecipeCard 
               title="Nutrient Boost (K+)"
               description="Correcting potassium deficiency in sandy-loam transitions."
               ingredients={["Wood Ash (2kg)", "Compost Tea (5L)", "Mulch Layer"]}
-              impact="Soil Recovery"
+              impact="Very Effective"
               icon={<Sprout className="text-green-400" />}
             />
           </div>
@@ -73,8 +73,8 @@ export function GroundTruthInsights() {
           <ul className="space-y-4">
             <ProtocolItem step="01" text="Verify leaf moisture before application" checked />
             <ProtocolItem step="02" text="Apply treatment during morning dew" checked />
-            <ProtocolItem step="03" text="Monitor neural feedback in 48 hours" />
-            <ProtocolItem step="04" text="Update ground-truth registry" />
+            <ProtocolItem step="03" text="Check again in 2 days" />
+            <ProtocolItem step="04" text="Save progress to your farm log" />
           </ul>
           </GlassCard>
         </motion.div>

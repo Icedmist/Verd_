@@ -29,12 +29,19 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen text-white font-sans selection:bg-primary/30 selection:text-white overflow-x-hidden">
-      {theme === 'bitget' ? <LiquidMetalBackground /> : <NeuralBackground />}
+    <div className="relative min-h-screen w-full bg-[#030406] text-white font-sans selection:bg-primary/30 selection:text-white overflow-x-hidden">
+      {/* Global Background Layer */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        {theme === 'bitget' ? <LiquidMetalBackground /> : <NeuralBackground />}
+      </div>
       
-      <Navbar currentView={currentView} setView={setCurrentView} theme={theme} setTheme={setTheme} />
-
-      <Dashboard theme={theme} currentView={currentView} />
+      {/* Application Layer */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Navbar currentView={currentView} setView={setCurrentView} theme={theme} setTheme={setTheme} />
+        <main className="flex-1">
+          <Dashboard theme={theme} currentView={currentView} />
+        </main>
+      </div>
     </div>
   )
 }

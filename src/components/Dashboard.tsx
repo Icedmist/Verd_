@@ -156,23 +156,23 @@ export function Dashboard({ theme, currentView }: DashboardProps) {
               </motion.div>
             </div>
 
-            {/* Embedded Onboarding Flow */}
+            {/* Expanded Onboarding Flow */}
             <div className="mb-32">
               <div className="mb-12">
-                <h2 className="text-4xl font-bold italic tracking-tighter">Your Journey with <span className="text-primary not-italic">VERD</span></h2>
-                <p className="text-white/40 text-sm">Follow these simple steps to master intelligent crop diagnostics.</p>
+                <h2 className="text-4xl font-bold italic tracking-tighter uppercase mb-2">Mastering the <span className="text-primary not-italic">Neural Agri Stack</span></h2>
+                <p className="text-white/40 text-sm max-w-xl">A step-by-step guide to securing your harvest and navigating the VERD ecosystem.</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {[
-                  { step: '01', title: 'Upload Scan', desc: 'Provide a high-res photo of the leaf.' },
-                  { step: '02', title: 'Neural Analysis', desc: 'AI processes the pathology markers.' },
-                  { step: '03', title: 'Get Insights', desc: 'Receive immediate treatment protocols.' },
-                  { step: '04', title: 'Track Health', desc: 'Monitor trends over the entire harvest.' }
+                  { step: '01', title: 'Neural Identity', desc: 'Secure your agrarian vault or synchronize your existing sessions to preserve data integrity.' },
+                  { step: '02', title: 'Command Center', desc: 'Toggle seamlessly between Diagnostics, History, and the Learning Hub via the premium sidebar.' },
+                  { step: '03', title: 'Pathology Capture', desc: 'Initialize high-fidelity leaf scanning. Our AI analyzes multi-spectral markers in milliseconds.' },
+                  { step: '04', title: 'Yield Optimization', desc: 'Review real-time ground-truth insights and deploy localized interventions suggested by the stack.' }
                 ].map((item, i) => (
-                  <GlassCard key={i} className="p-6 border-white/5 bg-black/20 hover:bg-black/40 transition-all">
-                    <span className="text-4xl font-black text-white/5 leading-none block mb-4 italic">{item.step}</span>
-                    <h4 className="font-bold mb-2 text-sm text-primary">{item.title}</h4>
-                    <p className="text-white/40 text-xs leading-relaxed">{item.desc}</p>
+                  <GlassCard key={i} className="p-8 border-white/5 bg-black/20 hover:bg-black/40 transition-all group">
+                    <span className="text-6xl font-black text-white/[0.02] group-hover:text-primary/[0.05] transition-colors leading-none block mb-4 italic">{item.step}</span>
+                    <h4 className="font-bold mb-3 text-sm text-primary uppercase tracking-widest">{item.title}</h4>
+                    <p className="text-white/40 text-xs leading-relaxed font-light">{item.desc}</p>
                   </GlassCard>
                 ))}
               </div>

@@ -52,7 +52,7 @@ export function Dashboard({ theme }: { theme: 'bitget' | 'greenfamily' }) {
             <span className="font-bold uppercase tracking-widest text-xs">Mission Profile</span>
           </div>
           <p className="text-white/60 leading-relaxed text-sm mb-6">
-            VERD is an AI-driven platform designed to identify crop pathologies with leaf-level precision. Our mission is to stabilize agricultural output in regions like Gombe through localized biometric intelligence.
+            VERD is an AI-driven platform designed to identify crop pathologies with leaf-level precision. Our mission is to stabilize agricultural output through data-driven resilience and localized biometric intelligence.
           </p>
           <div className="flex gap-4">
             <div className="h-0.5 flex-1 bg-primary/20 rounded-full overflow-hidden">
@@ -70,7 +70,7 @@ export function Dashboard({ theme }: { theme: 'bitget' | 'greenfamily' }) {
 
       {/* Footer Branding */}
       <footer className="mt-48 pt-12 border-t border-white/5 text-white/20 text-[10px] uppercase tracking-[0.4em] flex flex-col md:flex-row justify-between items-center gap-6">
-        <p>© 2026 VERD Technologies • Localized for Gombe, Nigeria</p>
+        <p>© 2026 VERD Technologies • Agrarian Tech Stack • v1.0.4</p>
         <div className="flex gap-12 font-bold">
           <a href="#" className="hover:text-primary transition-colors">Neural API</a>
           <a href="#" className="hover:text-primary transition-colors">Privacy Shield</a>

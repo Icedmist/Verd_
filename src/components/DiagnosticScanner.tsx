@@ -117,7 +117,7 @@ export function DiagnosticScanner() {
                   
                   <h3 className="text-3xl font-bold mb-4 tracking-tight">Puccinia sorghi</h3>
                   <p className="text-white/80 mb-8 leading-relaxed text-lg">
-                    Common Rust detected with **98.2% confidence**. Localized Gombe weather patterns suggest rapid spread potential.
+                    Common Rust detected with **98.2% confidence**. Localized climate data models suggest rapid spread potential.
                   </p>
                   
                   <div className="space-y-4">

@@ -29,7 +29,7 @@ function App() {
   }, [])
 
   return (
-    <div className="relative min-h-screen w-full bg-[#030406] text-white font-sans selection:bg-primary/30 selection:text-white overflow-x-hidden">
+    <div className="relative min-h-screen w-full text-white font-sans selection:bg-primary/30 selection:text-white overflow-x-hidden">
       {/* Global Background Layer */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         {theme === 'bitget' ? <LiquidMetalBackground /> : <NeuralBackground />}

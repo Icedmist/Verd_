@@ -32,14 +32,12 @@ export function Auth({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
             <h2 className="text-4xl font-bold tracking-tighter italic mb-2">
               {mode === 'login' ? 'Welcome back, friend!' : 'Join the family'}
             </h2>
-            <p className="text-white/40 text-sm">
-              {mode === 'login' 
-                ? 'Great to see you again. Let’s check on your fields.' 
-                : 'Ready to grow smarter? Let’s set up your farm profile.'}
+            <p className="text-white/40 text-sm mb-8">
+              Secure your agrarian identity and keep your harvest insights synchronized across all your devices.
             </p>
           </div>
 
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
             <AnimatePresence mode="wait">
               {mode === 'signup' && (
                 <motion.div

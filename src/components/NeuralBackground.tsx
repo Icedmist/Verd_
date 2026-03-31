@@ -98,11 +98,9 @@ export function NeuralBackground() {
   }, [])
 
   return (
-    <div className="fixed inset-0 -z-10 bg-black">
-      <canvas
-        ref={canvasRef}
-        className="w-full h-full opacity-20"
-      />
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 -z-10 bg-[#010402]"
+    />
   )
 }

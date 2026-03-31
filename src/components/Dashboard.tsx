@@ -59,14 +59,14 @@ export function Dashboard({ theme, currentView }: DashboardProps) {
                 </div>
                 
                 <h1 className="text-7xl md:text-[10rem] font-bold tracking-tighter mb-10 leading-[0.8] italic">
-                  <span className="text-white">NEURAL</span>
+                  <span className="text-white">GROWING</span>
                   <br />
-                  <span className="text-white/20 not-italic font-black">AGRI</span> 
-                  <span className="text-white/60"> STACK</span>
+                  <span className="text-white/20 not-italic font-black">SMARTER</span> 
+                  <span className="text-white/60"> TOGETHER</span>
                 </h1>
                 
                 <p className="text-xl md:text-2xl text-white/40 max-w-2xl leading-relaxed font-light">
-                  Empowering the modern farmer with real-time neural diagnostics and high-fidelity field insights.
+                  Think of VERD as your digital field-hand. We're here to help you spot crop issues early, so you can focus on what you do best: farming.
                 </p>
               </motion.div>
 
@@ -79,10 +79,10 @@ export function Dashboard({ theme, currentView }: DashboardProps) {
                 <GlassCard className="h-full border-white/5 bg-black/40">
                   <div className="flex items-center gap-3 mb-4 text-primary">
                     <ShieldCheck size={24} />
-                    <span className="font-bold uppercase tracking-widest text-xs">Agrarian Sovereignty</span>
+                    <span className="font-bold uppercase tracking-widest text-xs">Your Soil, Your Data</span>
                   </div>
                   <p className="text-white/60 leading-relaxed text-sm mb-6">
-                    VERD isn't just a tool; it's a decentralized intelligence layer for your harvest. We provide the ground-truth data you need to ensure food security and sustainable growth.
+                    We believe in agrarian sovereignty. That means your data serves your harvest, first and foremost. We provide the ground-truth insights to help you grow with confidence and security.
                   </p>
                   <div className="flex gap-4">
                     <div className="h-0.5 flex-1 bg-primary/20 rounded-full overflow-hidden">
@@ -159,15 +159,15 @@ export function Dashboard({ theme, currentView }: DashboardProps) {
             {/* Expanded Onboarding Flow */}
             <div id="onboarding" className="mb-32">
               <div className="mb-12">
-                <h2 className="text-4xl font-bold italic tracking-tighter uppercase mb-2">Mastering the <span className="text-primary not-italic">Neural Agri Stack</span></h2>
-                <p className="text-white/40 text-sm max-w-xl">A step-by-step guide to securing your harvest and navigating the VERD ecosystem.</p>
+                <h2 className="text-4xl font-bold italic tracking-tighter uppercase mb-2">Getting started with <span className="text-primary not-italic">VERD</span></h2>
+                <p className="text-white/40 text-sm max-w-xl">It only takes a few steps to start making your harvest smarter. Let's walk through them together.</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {[
-                  { step: '01', title: 'Neural Identity', desc: 'Secure your agrarian vault or synchronize your existing sessions to preserve data integrity.' },
-                  { step: '02', title: 'Command Center', desc: 'Toggle seamlessly between Diagnostics, History, and the Learning Hub via the premium sidebar.' },
-                  { step: '03', title: 'Pathology Capture', desc: 'Initialize high-fidelity leaf scanning. Our AI analyzes multi-spectral markers in milliseconds.' },
-                  { step: '04', title: 'Yield Optimization', desc: 'Review real-time ground-truth insights and deploy localized interventions suggested by the stack.' }
+                  { step: '01', title: 'Set Up Your Vault', desc: 'Securely create your digital identity so your scan history stays private and yours.' },
+                  { step: '02', title: 'Find Your Way', desc: 'Toggle between Scans, Insights, and the Tech Hub using the simple sidebar on the left.' },
+                  { step: '03', title: 'Capture a Leaf', desc: 'Snap a clear photo of any crop issue. Our AI works in the background to spot pathology markers.' },
+                  { step: '04', title: 'Get Expert Advice', desc: 'Review the results and follow the suggested steps to optimize your yield and protect your field.' }
                 ].map((item, i) => (
                   <GlassCard key={i} className="p-8 border-white/5 bg-black/20 hover:bg-black/40 transition-all group">
                     <span className="text-6xl font-black text-white/[0.02] group-hover:text-primary/[0.05] transition-colors leading-none block mb-4 italic">{item.step}</span>

@@ -15,8 +15,7 @@ export function LiquidMetalBackground() {
   }
 
   return (
-    <div className="absolute inset-0 -z-10 bg-black">
-      <div className="absolute inset-0 opacity-30">
+    <div className="absolute inset-0 -z-10">
       <LiquidMetal
         width="100%"
         height="100%"
@@ -32,7 +31,6 @@ export function LiquidMetalBackground() {
         speed={0.4}
         scale={2.2}
       />
-      </div>
     </div>
   )
 }

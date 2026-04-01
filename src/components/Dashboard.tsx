@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { GlassCard } from './ui/GlassCard'
 import { cn } from '../lib/utils'
 import { DiagnosticScanner } from './DiagnosticScanner'
+import DailyTip from './DailyTip'
 
 interface DashboardProps {
   theme: 'bitget' | 'greenfamily'
@@ -144,6 +145,10 @@ export function Dashboard({
               </div>
             </GlassCard>
           </motion.div>
+        </div>
+
+        <div className="max-w-xl mx-auto mb-32">
+          <DailyTip />
         </div>
 
         {/* Technology Hub & Usability */}

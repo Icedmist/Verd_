@@ -9,10 +9,12 @@ import { GroundTruthInsights } from './components/GroundTruthInsights'
 import { UserDashboard } from './components/UserDashboard'
 import { ProfileSettings } from './components/ProfileSettings'
 import { ScanHistory } from './components/ScanHistory'
-import { LearningCenter } from './components/LearningCenter'
+import LearningCenter from './components/LearningCenter'
+import CourseView from './components/CourseView'
 import { ScanReport } from './components/ScanReport'
 import { auth } from './lib/firebase'
 import { onAuthStateChanged, User } from 'firebase/auth'
+import { seedCourses } from './lib/seed'
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ user, loading, children, setShowAuth }: { user: User | null, loading: boolean, children: React.ReactNode, setShowAuth: (v: boolean) => void }) => {
@@ -58,7 +60,14 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user)
       setLoading(false)
+      if (user) {
+        console.log('Auth confirmed: Attempting to seed courses/tips...')
+        seedCourses().catch(err => console.error('Seeding failed:', err))
+      }
     })
+
+    // console.log('Mounting App, calling seed...');
+    // seedCourses();
 
     return () => {
       observer.disconnect()
@@ -103,6 +112,7 @@ function App() {
             <Route path="/profile" element={<ProtectedRoute user={user} loading={loading} setShowAuth={setShowAuth}><div className="pt-32 px-6"><ProfileSettings /></div></ProtectedRoute>} />
             <Route path="/history" element={<ProtectedRoute user={user} loading={loading} setShowAuth={setShowAuth}><div className="pt-32 px-6"><ScanHistory /></div></ProtectedRoute>} />
             <Route path="/learning" element={<ProtectedRoute user={user} loading={loading} setShowAuth={setShowAuth}><div className="pt-32 px-6"><LearningCenter /></div></ProtectedRoute>} />
+            <Route path="/learning/:courseId" element={<ProtectedRoute user={user} loading={loading} setShowAuth={setShowAuth}><div className="pt-32 px-6"><CourseView /></div></ProtectedRoute>} />
             <Route path="/report/:id" element={<ProtectedRoute user={user} loading={loading} setShowAuth={setShowAuth}><div className="pt-32 px-6"><ScanReport /></div></ProtectedRoute>} />
             
             {/* Fallback */}

@@ -61,7 +61,7 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
     if (scanning && progress < 100) {
       const timer = setTimeout(() => setProgress(prev => prev + 2), 50)
       return () => clearTimeout(timer)
-    } else if (progress >= 100) {
+    } else if (progress >= 100 && result !== 'complete') {
       setScanning(false)
       setResult('complete')
       saveResult()

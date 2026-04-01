@@ -5,6 +5,7 @@ import { cn } from '../lib/utils'
 import { GlassCard } from './ui/GlassCard'
 import { db, auth } from '../lib/firebase'
 import { collection, query, where, orderBy, limit, getDocs, doc, getDoc } from 'firebase/firestore'
+import DailyTip from './DailyTip'
 
 export function GroundTruthInsights() {
   const [loading, setLoading] = useState(true)

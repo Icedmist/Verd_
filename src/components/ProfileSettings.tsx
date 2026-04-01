@@ -3,8 +3,10 @@ import { motion } from 'framer-motion'
 import { User, Mail, MapPin, Phone, ShieldCheck, Save, Bell, Lock, Eye, EyeOff, Loader2, CheckCircle2, Sprout, History as HistoryIcon, ChevronDown } from 'lucide-react'
 import { cn } from '../lib/utils'
 import { GlassCard } from './ui/GlassCard'
-import { db, auth } from '../lib/firebase'
+import { db, auth, storage } from '../lib/firebase'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { compressImage } from '../lib/image-utils'
 
 export function ProfileSettings() {
   const [activeTab, setActiveTab] = useState<'info' | 'notifications' | 'security'>('info')
@@ -24,6 +26,8 @@ export function ProfileSettings() {
   const [farmSize, setFarmSize] = useState('')
   const [farmRole, setFarmRole] = useState('Owner')
   const [cropTypes, setCropTypes] = useState('')
+  const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null)
+  const [isUploading, setIsUploading] = useState(false)
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -42,8 +46,9 @@ export function ProfileSettings() {
           setIsFarmer(data.isFarmer ?? true)
           setFarmName(data.farmName || '')
           setFarmSize(data.farmSize || '')
-          setFarmRole(data.farmRole || 'Owner')
+           setFarmRole(data.farmRole || 'Owner')
           setCropTypes(data.cropTypes || '')
+          setProfilePictureUrl(data.profilePictureUrl || auth.currentUser.photoURL || null)
         } else {
           // Initialize with Auth defaults
           setFullName(auth.currentUser.displayName || '')
@@ -74,6 +79,7 @@ export function ProfileSettings() {
         farmSize,
         farmRole,
         cropTypes,
+        profilePictureUrl,
         updatedAt: new Date().toISOString()
       }, { merge: true })
       
@@ -83,6 +89,24 @@ export function ProfileSettings() {
       console.error('Error saving profile:', err)
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file || !auth.currentUser) return
+
+    try {
+      setIsUploading(true)
+      const compressedBlob = await compressImage(file)
+      const storageRef = ref(storage, `profiles/${auth.currentUser.uid}`)
+      await uploadBytes(storageRef, compressedBlob)
+      const downloadURL = await getDownloadURL(storageRef)
+      setProfilePictureUrl(downloadURL)
+    } catch (err) {
+      console.error('Error uploading image:', err)
+    } finally {
+      setIsUploading(false)
     }
   }
 
@@ -105,12 +129,31 @@ export function ProfileSettings() {
         <div className="md:col-span-1 space-y-4">
           <GlassCard className="p-6 border-white/5 bg-white/5">
             <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 md:w-24 md:h-24 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center mb-4 relative">
-                <User size={32} className="md:size-[40px] text-primary" />
-                <div className="absolute bottom-0 right-0 p-1.5 bg-primary text-black rounded-full border-2 border-[#0d0f14]">
+              <div 
+                onClick={() => document.getElementById('profile-upload')?.click()}
+                className="w-16 h-16 md:w-24 md:h-24 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center mb-4 relative cursor-pointer group/avatar overflow-hidden"
+              >
+                {isUploading ? (
+                  <Loader2 className="animate-spin text-primary" size={24} />
+                ) : profilePictureUrl ? (
+                  <img src={profilePictureUrl} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  <User size={32} className="md:size-[40px] text-primary" />
+                )}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/avatar:opacity-100 transition-opacity flex items-center justify-center">
+                  <span className="text-[8px] font-bold text-white uppercase tracking-widest">Change</span>
+                </div>
+                <div className="absolute bottom-0 right-0 p-1.5 bg-primary text-black rounded-full border-2 border-[#0d0f14] z-10">
                   <ShieldCheck size={10} />
                 </div>
               </div>
+              <input 
+                id="profile-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
               <h3 className="font-bold text-lg">{fullName || 'User'}</h3>
               <p className="text-[10px] text-white/40 uppercase tracking-widest">{isFarmer ? 'Premium Farmer' : 'Visual Explorer'}</p>
             </div>

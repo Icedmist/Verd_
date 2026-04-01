@@ -1,133 +1,173 @@
-import { motion } from 'framer-motion'
-import { BookOpen, PlayCircle, Award, Compass, Search, ChevronRight, Sprout, Plane as Drone, Bug } from 'lucide-react'
-import { GlassCard } from './ui/GlassCard'
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { BookOpen, Trophy, Clock, CheckCircle2, ChevronRight, Play } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { db, auth } from '../lib/firebase';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
-export function LearningCenter() {
-  const modules = [
-    { title: 'VERD Fundamentals', lessonsCount: 6, icon: <Sprout size={24} />, progress: 100 },
-    { title: 'Drone Pathology', lessonsCount: 4, icon: <Drone size={24} />, progress: 30 },
-  ]
+interface CourseProgress {
+  courseId: string;
+  completedLessons: string[];
+  status: 'started' | 'completed';
+}
 
-  const featuredLesson = {
-    title: 'Precision Spraying with Drones',
-    description: 'Learn how to calibrate your VERD-enabled drones for precision application of organic pesticides.',
-    time: '15 min',
-    level: 'Advanced'
-  }
+const LearningCenter = () => {
+  const navigate = useNavigate();
+  const [courses, setCourses] = useState<any[]>([]);
+  const [progress, setProgress] = useState<Record<string, CourseProgress>>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch Courses
+        const coursesSnap = await getDocs(collection(db, 'courses'));
+        const coursesData: any[] = [];
+        coursesSnap.forEach(doc => coursesData.push(doc.data()));
+        setCourses(coursesData);
+
+        // Fetch Progress
+        if (auth.currentUser) {
+          const q = query(
+            collection(db, 'userProgress'),
+            where('userId', '==', auth.currentUser.uid)
+          );
+          const querySnapshot = await getDocs(q);
+          const progressData: Record<string, CourseProgress> = {};
+          querySnapshot.forEach((doc) => {
+            const data = doc.data() as CourseProgress;
+            progressData[data.courseId] = data;
+          });
+          setProgress(progressData);
+        }
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-12 pb-24">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 text-bitget-turquoise">
-        <div>
-          <h1 className="text-5xl font-bold tracking-tighter italic mb-2">Learning <span className="text-primary not-italic font-black">CENTER</span></h1>
-          <p className="text-white/40 text-sm">Expand your expertise in AI-driven agronomy and drone tech.</p>
-        </div>
-        <div className="flex items-center gap-4">
-          <GlassCard className="px-4 py-2 border-primary/20 bg-primary/5 flex items-center gap-3">
-            <Award className="text-primary" size={20} />
-            <div className="text-right">
-              <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Your Points</p>
-              <p className="text-sm font-bold">1,240 XP</p>
+    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-[#0d0f14]">
+      <div className="max-w-7xl mx-auto">
+        <header className="mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-3 mb-4"
+          >
+            <div className="p-2 bg-primary/20 rounded-lg">
+              <BookOpen className="w-6 h-6 text-primary" />
             </div>
-          </GlassCard>
-        </div>
-      </div>
+            <span className="text-primary font-bold tracking-widest uppercase text-xs">Agri-Neural Academy</span>
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight"
+          >
+            Learning <span className="text-primary">Center</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-muted-foreground text-lg max-w-2xl"
+          >
+            Enhance your agronomy expertise with professional courses designed for modern digital farmers.
+          </motion.p>
+        </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
-          {/* Hero Widget */}
-          <GlassCard className="p-10 border-primary/20 bg-primary/5 relative overflow-hidden group">
-            <div className="absolute -right-20 -top-20 w-80 h-80 bg-primary/10 blur-[100px] group-hover:bg-primary/20 transition-all" />
-            <div className="relative z-10 flex flex-col items-start gap-6">
-              <div className="px-3 py-1 rounded-full bg-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest">
-                Featured Module
-              </div>
-              <h2 className="text-3xl font-bold italic leading-tight max-w-lg">{featuredLesson.title}</h2>
-              <p className="text-white/60 text-sm leading-relaxed max-w-md">{featuredLesson.description}</p>
-              <div className="flex items-center gap-6 text-[10px] font-bold text-white/40 uppercase tracking-widest">
-                <span className="flex items-center gap-2"><PlayCircle size={14} className="text-primary" /> {featuredLesson.time} Video</span>
-                <span className="flex items-center gap-2"><Award size={14} className="text-primary" /> {featuredLesson.level}</span>
-              </div>
-              <button className="px-8 py-3 bg-primary text-black rounded-2xl font-bold uppercase tracking-widest shadow-lg shadow-primary/20 transition-transform active:scale-95">
-                Start Learning
-              </button>
-            </div>
-          </GlassCard>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {courses.map((course, index) => {
+            const courseProgress = progress[course.id];
+            const completedCount = courseProgress?.completedLessons.length || 0;
+            const lessonsCount = course.lessons?.length || 0;
+            const progressPercentage = lessonsCount > 0 ? (completedCount / lessonsCount) * 100 : 0;
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {modules.map((mod, idx) => (
+            return (
               <motion.div
-                key={mod.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
+                key={course.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1 }}
+                className="group relative bg-[#161b22] rounded-[32px] overflow-hidden border border-white/5 hover:border-primary/50 transition-all duration-500 shadow-2xl"
               >
-                <GlassCard className="p-6 border-white/5 bg-white/5 hover:border-primary/20 transition-all flex flex-col gap-6">
-                  <div className="flex items-center justify-between">
-                    <div className="p-3 bg-white/5 text-primary rounded-2xl">
-                      {mod.icon}
-                    </div>
-                    <div className="text-right">
-                      <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest leading-none mb-1">{mod.lessonsCount} LESSONS</p>
-                      <p className="text-xs font-bold text-white/60">Module {idx + 1}</p>
-                    </div>
+                <div className="aspect-video relative overflow-hidden">
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#161b22] via-transparent to-transparent" />
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-black/50 backdrop-blur-md rounded-full border border-white/10">
+                    <span className="text-[10px] font-bold text-white uppercase tracking-wider">{course.level}</span>
                   </div>
-                  <div>
-                    <h3 className="font-bold mb-4">{mod.title}</h3>
-                    <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                      <motion.div 
+                </div>
+
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold mb-3 tracking-tight group-hover:text-primary transition-colors">
+                    {course.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
+                    {course.description}
+                  </p>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-3 h-3" />
+                        {course.duration}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-3 h-3 text-primary" />
+                        {completedCount}/{lessonsCount} Lessons
+                      </div>
+                    </div>
+
+                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                      <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: `${mod.progress}%` }}
-                        transition={{ duration: 1, delay: 0.5 + idx * 0.1 }}
-                        className="h-full bg-primary" 
+                        animate={{ width: `${progressPercentage}%` }}
+                        className="h-full bg-primary"
                       />
                     </div>
-                    <div className="flex justify-between mt-2 text-[10px] font-bold uppercase tracking-widest text-white/20">
-                      <span>{mod.progress}% Complete</span>
-                      <span className="text-primary/60 hover:text-primary transition-colors cursor-pointer flex items-center gap-1">Continue <ChevronRight size={10} /></span>
-                    </div>
+
+                    <button
+                      onClick={() => navigate(`/learning/${course.id}`)}
+                      className="w-full mt-4 flex items-center justify-center gap-2 py-4 bg-white/5 hover:bg-primary hover:text-white rounded-2xl font-bold transition-all group/btn"
+                    >
+                      {completedCount === lessonsCount && lessonsCount > 0 ? (
+                        <>
+                          <Trophy className="w-4 h-4" />
+                          Certified
+                        </>
+                      ) : completedCount > 0 ? (
+                        <>
+                          <Play className="w-4 h-4" />
+                          Resume Course
+                        </>
+                      ) : (
+                        <>
+                          <Play className="w-4 h-4" />
+                          Start Course
+                        </>
+                      )}
+                      <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    </button>
                   </div>
-                </GlassCard>
+                </div>
               </motion.div>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-8">
-          <GlassCard className="p-8 border-white/5 bg-white/5">
-            <h4 className="text-xs font-bold text-white/40 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-              <Compass size={14} className="text-primary" /> Curated Paths
-            </h4>
-            <div className="space-y-6">
-              <div className="group cursor-pointer">
-                <p className="text-xs font-bold mb-1 group-hover:text-primary transition-colors">Digital Soil Profiling</p>
-                <p className="text-[10px] text-white/40 leading-relaxed">Master the art of reading soil health from spectral imagery.</p>
-              </div>
-              <div className="group cursor-pointer">
-                <p className="text-xs font-bold mb-1 group-hover:text-primary transition-colors">Pest Management 2.0</p>
-                <p className="text-[10px] text-white/40 leading-relaxed">Integrated pest control in the AI era.</p>
-              </div>
-              <div className="group cursor-pointer">
-                <p className="text-xs font-bold mb-1 group-hover:text-primary transition-colors">Economic Agronomy</p>
-                <p className="text-[10px] text-white/40 leading-relaxed">Maximizing ROI through precision technology.</p>
-              </div>
-            </div>
-            <button className="w-full mt-8 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-widest hover:bg-white/10 transition-all text-white/40">
-              Browse All Paths
-            </button>
-          </GlassCard>
-
-          <GlassCard className="p-8 border-white/5 bg-white/5 relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-6 opacity-5 rotate-12">
-              <BookOpen size={120} />
-            </div>
-            <h4 className="text-xs font-bold text-white/40 uppercase tracking-[0.2em] mb-4">Daily Tip</h4>
-            <p className="text-sm italic leading-relaxed text-white/80">
-              "Did you know? Morning scans often yield 15% higher spectral accuracy due to lower atmospheric turbulence."
-            </p>
-          </GlassCard>
+            );
+          })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default LearningCenter;

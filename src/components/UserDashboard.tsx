@@ -6,6 +6,7 @@ import { GlassCard } from './ui/GlassCard'
 import { cn } from '../lib/utils'
 import { db, auth } from '../lib/firebase'
 import { collection, query, where, orderBy, limit, getDocs, doc, getDoc } from 'firebase/firestore'
+import DailyTip from './DailyTip'
 
 interface Scan {
   id: string
@@ -123,8 +124,7 @@ export function UserDashboard() {
 
   return (
     <div className="space-y-12 pb-24">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
         <div>
           <div className="flex items-center gap-2 mb-4 text-primary font-bold tracking-widest text-[10px] uppercase">
             <ShieldCheck size={14} />
@@ -139,10 +139,14 @@ export function UserDashboard() {
             <Calendar size={20} />
           </div>
           <div>
-            <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Growing Season</p>
-            <p className="text-sm font-bold">SAVANNAH BELT • Q2</p>
+            <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest leading-none mb-1">Today's Cycle</p>
+            <p className="text-sm font-bold font-mono">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
           </div>
         </div>
+      </div>
+
+      <div className="max-w-4xl mb-12">
+        <DailyTip />
       </div>
 
       {/* Stats Grid */}

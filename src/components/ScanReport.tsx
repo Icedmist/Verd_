@@ -40,6 +40,7 @@ export function ScanReport() {
   const reportRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState(true)
   const [report, setReport] = useState<ScanData | null>(null)
+  const [localImageUrl, setLocalImageUrl] = useState<string | null>(null)
   const [isSharing, setIsSharing] = useState(false)
   const [copySuccess, setCopySuccess] = useState(false)
 
@@ -50,7 +51,24 @@ export function ScanReport() {
         const docRef = doc(db, 'scans', id)
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
-          setReport({ id: docSnap.id, ...docSnap.data() } as ScanData)
+          const data = docSnap.id ? { id: docSnap.id, ...docSnap.data() } as ScanData : null
+          setReport(data)
+          
+          // Localization: Convert remote image to Data URL to bypass CORS during capture
+          if (data?.imageUrl) {
+            try {
+              const res = await fetch(data.imageUrl, { mode: 'cors' })
+              const blob = await res.blob()
+              const reader = new FileReader()
+              reader.onloadend = () => {
+                setLocalImageUrl(reader.result as string)
+              }
+              reader.readAsDataURL(blob)
+            } catch (imageErr) {
+              console.warn('Failed to localize image (CORS). PNG generation might fail.', imageErr)
+              setLocalImageUrl(data.imageUrl) // Fallback to remote URL
+            }
+          }
         }
       } catch (err) {
         console.error('Error fetching report:', err)
@@ -74,6 +92,7 @@ export function ScanReport() {
       const dataUrl = await toPng(reportRef.current, {
         cacheBust: true,
         backgroundColor: '#0d0f14',
+        pixelRatio: 2,
         style: {
           borderRadius: '0'
         }
@@ -189,13 +208,23 @@ export function ScanReport() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div className="relative group">
                   <div className="absolute -inset-4 bg-primary/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="aspect-square rounded-[24px] overflow-hidden border border-white/10 relative z-10 shadow-2xl">
-                    <img 
-                      src={report.imageUrl} 
-                      alt={report.cropName} 
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  <div className="aspect-square rounded-[24px] overflow-hidden border border-white/10 relative z-10 shadow-2xl bg-black/40">
+                    {localImageUrl && (
+                      <img 
+                        src={localImageUrl} 
+                        alt={report.cropName} 
+                        crossOrigin="anonymous"
+                        className="w-full h-full object-cover opacity-0 transition-opacity duration-500"
+                        onLoad={(e) => (e.currentTarget.style.opacity = '1')}
+                        onError={(e) => {
+                          if (localImageUrl !== report.imageUrl) {
+                            console.warn('Local blob failed, falling back to direct URL.');
+                            setLocalImageUrl(report.imageUrl);
+                          }
+                        }}
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute bottom-6 left-6 right-6">
                       <div className="px-3 py-1 bg-primary/20 border border-primary/30 rounded-full w-fit mb-2 backdrop-blur-md">
                         <span className="text-[8px] font-bold text-primary uppercase tracking-widest">{report.cropName}</span>

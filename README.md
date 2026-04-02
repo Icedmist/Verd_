@@ -47,10 +47,10 @@ Knowledge is the best fertilizer. Our built-in Learning Center provides:
 
 ## 🖼️ See Verd in Action
 
-| Liquid Metal Aesthetic | Learning Center | Dashboard Analytics |
+| Field Dashboard | Learning Center | Getting Started |
 | :---: | :---: | :---: |
-| ![Hero Visual](./public/screenshots/hero.png) | ![Learning Center](./public/screenshots/learning-center.png) | ![Dashboard](./public/screenshots/dashboard.png) |
-| *Premium Shader Effects* | *Professional Agronomy Courses* | *Real-time Farm Health Metrics* |
+| ![Dashboard Analytics](./public/screenshots/dashboard.png) | ![Ag-Learning Center](./public/screenshots/learning-center.png) | ![User Onboarding](./public/screenshots/onboarding.png) |
+| *Real-time Farm Analytics* | *Professional Agronomy Courses* | *Seamless Field Onboarding* |
 
 ---
 

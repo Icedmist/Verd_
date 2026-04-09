@@ -5,8 +5,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "@google/generative-ai": "^0.21.0"
+   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "@paper-design/shaders-react": "^0.0.72",
     "clsx": "^2.1.1",
     "firebase": "^12.11.0",

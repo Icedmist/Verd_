@@ -1,72 +1,31 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Zap, Camera, Upload, CheckCircle2, AlertTriangle, Info, ScanLine } from 'lucide-react'
+import { Zap, Camera, Upload, CheckCircle2, AlertTriangle, ScanLine } from 'lucide-react'
 import { toPng } from 'html-to-image'
 import { cn } from '../lib/utils'
 import { GlassCard } from './ui/GlassCard'
 import { ResultShareCard } from './ui/ResultShareCard'
 import { db, auth } from '../lib/firebase'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
-import { analyzeCrop } from '../lib/gemini'
+import { analyzeCrop } from '../lib/Gemini'
 
 export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }) {
   const [scanning, setScanning] = useState(false)
   const [progress, setProgress] = useState(0)
   const [result, setResult] = useState<null | 'complete'>(null)
+  const [analysis, setAnalysis] = useState<any>(null)
   const shareCardRef = useRef<HTMLDivElement>(null)
-  const [analysis, setAnalysis] = useState<any>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
-  
-const saveResult = async (aiData: any) => {
-  if (!auth.currentUser) return;
-  try {
-    await addDoc(collection(db, 'scans'), {
-      userId: auth.currentUser.uid,
-      cropName: aiData.cropName,
-      disease: aiData.disease,
-      confidence: aiData.confidence,
-      recommendation: aiData.recommendation,
-      timestamp: serverTimestamp(),
-      theme
-    });
-  } catch (err) { console.error(err); }
-};
-  const handleImageCapture = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
-
-  setScanning(true);
-  setProgress(30);
-
-  const reader = new FileReader();
-  reader.onloadend = async () => {
-    const base64 = (reader.result as string).split(',')[1];
-    setProgress(60);
-    
-    try {
-      const data = await analyzeCrop(base64);
-      setAnalysis(data);
-      setResult('complete');
-      await saveResult(data);
-      setProgress(100);
-    } catch (err) {
-      console.error("Gemini Scan Failed", err);
-      setScanning(false);
-    }
-  };
-  reader.readAsDataURL(file);
-};
-  
-  const saveResult = async () => {
+  const saveResult = async (aiData: any) => {
     if (!auth.currentUser) return
-
     try {
       await addDoc(collection(db, 'scans'), {
         userId: auth.currentUser.uid,
-        cropName: 'Maize', // This would be dynamic in a real app
-        disease: 'Leaf Rust',
-        confidence: 98.2,
-        recommendation: 'Apply organic fungicide immediately and increase spacing between crops.',
+        cropName: aiData.cropName,
+        disease: aiData.disease,
+        confidence: aiData.confidence,
+        recommendation: aiData.recommendation,
         timestamp: serverTimestamp(),
         theme
       })
@@ -75,16 +34,48 @@ const saveResult = async (aiData: any) => {
     }
   }
 
+  const handleImageCapture = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setScanning(true)
+    setResult(null)
+    setProgress(30)
+
+    const reader = new FileReader()
+    reader.onloadend = async () => {
+      try {
+        const base64 = (reader.result as string).split(',')[1]
+        setProgress(60)
+        
+        const data = await analyzeCrop(base64)
+        setAnalysis(data)
+        await saveResult(data)
+        
+        setProgress(100)
+        setScanning(false)
+        setResult('complete')
+      } catch (err) {
+        console.error("Gemini Scan Failed:", err)
+        setScanning(false)
+        setProgress(0)
+      }
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const triggerFilePicker = () => {
+    fileInputRef.current?.click()
+  }
+
   const handleShare = async () => {
     if (shareCardRef.current === null) return
-
     try {
       const dataUrl = await toPng(shareCardRef.current, {
         cacheBust: true,
         backgroundColor: '#000',
         pixelRatio: 2,
       })
-      
       const link = document.createElement('a')
       link.download = `VERD-Result-${Date.now()}.png`
       link.href = dataUrl
@@ -94,25 +85,17 @@ const saveResult = async (aiData: any) => {
     }
   }
 
-  const startScan = () => {
-    setScanning(true)
-    setProgress(0)
-    setResult(null)
-  }
-
-  useEffect(() => {
-    if (scanning && progress < 100) {
-      const timer = setTimeout(() => setProgress(prev => prev + 2), 50)
-      return () => clearTimeout(timer)
-    } else if (progress >= 100 && result !== 'complete') {
-      setScanning(false)
-      setResult('complete')
-      saveResult()
-    }
-  }, [scanning, progress])
-
   return (
     <GlassCard className="rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden group border-white/5 hover:border-primary/20 transition-all">
+      <input 
+        type="file" 
+        ref={fileInputRef} 
+        className="hidden" 
+        accept="image/*" 
+        capture="environment" 
+        onChange={handleImageCapture} 
+      />
+
       <div className="absolute top-0 right-0 p-8 text-white/5 opacity-20 group-hover:opacity-40 transition-opacity">
         <Zap size={200} />
       </div>
@@ -127,7 +110,10 @@ const saveResult = async (aiData: any) => {
           </div>
 
           <div className="space-y-4">
-            <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 hover:border-primary/30 transition-all cursor-pointer group/scan" onClick={startScan}>
+            <div 
+              className="p-6 rounded-[2rem] bg-white/5 border border-white/10 hover:border-primary/30 transition-all cursor-pointer group/scan" 
+              onClick={triggerFilePicker}
+            >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className="p-3 rounded-2xl bg-primary/20 text-primary">
@@ -154,10 +140,13 @@ const saveResult = async (aiData: any) => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <ConfidenceMetric label="Leaf Rust" value={result ? 98.2 : 0} status="Critical" delay={0.1} />
-              <ConfidenceMetric label="Armyworm" value={result ? 4.1 : 0} status="Normal" delay={0.2} />
-              <ConfidenceMetric label="Nutrient Def" value={result ? 15.4 : 0} status="Warning" delay={0.3} />
-              <ConfidenceMetric label="Fungal Blight" value={result ? 0.8 : 0} status="Safe" delay={0.4} />
+              <ConfidenceMetric 
+                label={analysis?.disease || "Detection"} 
+                value={analysis?.confidence ? analysis.confidence * 100 : 0} 
+                status={analysis?.confidence > 0.8 ? "Critical" : "Safe"} 
+                delay={0.1} 
+              />
+              <ConfidenceMetric label="Status" value={result ? 100 : 0} status="Normal" delay={0.2} />
             </div>
           </div>
         </div>
@@ -171,7 +160,7 @@ const saveResult = async (aiData: any) => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 1.05 }}
                 className="aspect-square rounded-[3rem] border-2 border-dashed border-white/10 flex flex-col items-center justify-center text-white/20 hover:border-primary/40 hover:text-white/40 transition-all cursor-pointer"
-                onClick={startScan}
+                onClick={triggerFilePicker}
               >
                 <div className="relative">
                   <Camera size={64} className="mb-4" />
@@ -202,9 +191,9 @@ const saveResult = async (aiData: any) => {
                     <span>DISEASE ALERT [ACTION REQUIRED]</span>
                   </div>
                   
-                  <h3 className="text-3xl font-bold mb-4 tracking-tight">Leaf Rust Identified</h3>
+                  <h3 className="text-3xl font-bold mb-4 tracking-tight">{analysis?.disease} Identified</h3>
                   <p className="text-white/80 mb-8 leading-relaxed text-lg">
-                    We found **Leaf Rust** on your plant. This can spread quickly in your local climate.
+                    We detected **{analysis?.disease}** on your {analysis?.cropName}. This requires immediate attention.
                   </p>
                   
                   <div className="flex flex-col sm:flex-row gap-4">
@@ -217,20 +206,16 @@ const saveResult = async (aiData: any) => {
                       className="px-8 py-5 bg-white/5 border border-white/10 text-white font-bold rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center gap-2 group"
                     >
                       SHARE
-                      <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 100-3.316m0 0a3 3 0 110 3.316" />
-                      </svg>
                     </button>
                   </div>
 
-                  {/* Hidden card for PNG generation */}
                   <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
                     <ResultShareCard 
                       ref={shareCardRef}
-                      cropName="Maize"
-                      disease="Leaf Rust"
-                      confidence={98.2}
-                      recommendation="Apply organic fungicide immediately and increase spacing between crops."
+                      cropName={analysis?.cropName}
+                      disease={analysis?.disease}
+                      confidence={analysis?.confidence * 100}
+                      recommendation={analysis?.recommendation}
                       theme={theme}
                     />
                   </div>
@@ -261,4 +246,4 @@ function ConfidenceMetric({ label, value, status, delay }: { label: string, valu
       </div>
     </motion.div>
   )
-}
+          }

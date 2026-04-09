@@ -16,6 +16,47 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
   const shareCardRef = useRef<HTMLDivElement>(null)
   const [analysis, setAnalysis] = useState<any>(null);
 
+  
+const saveResult = async (aiData: any) => {
+  if (!auth.currentUser) return;
+  try {
+    await addDoc(collection(db, 'scans'), {
+      userId: auth.currentUser.uid,
+      cropName: aiData.cropName,
+      disease: aiData.disease,
+      confidence: aiData.confidence,
+      recommendation: aiData.recommendation,
+      timestamp: serverTimestamp(),
+      theme
+    });
+  } catch (err) { console.error(err); }
+};
+  const handleImageCapture = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  setScanning(true);
+  setProgress(30);
+
+  const reader = new FileReader();
+  reader.onloadend = async () => {
+    const base64 = (reader.result as string).split(',')[1];
+    setProgress(60);
+    
+    try {
+      const data = await analyzeCrop(base64);
+      setAnalysis(data);
+      setResult('complete');
+      await saveResult(data);
+      setProgress(100);
+    } catch (err) {
+      console.error("Gemini Scan Failed", err);
+      setScanning(false);
+    }
+  };
+  reader.readAsDataURL(file);
+};
+  
   const saveResult = async () => {
     if (!auth.currentUser) return
 

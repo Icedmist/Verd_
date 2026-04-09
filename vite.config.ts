@@ -14,4 +14,13 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api/xai': {
+        target: 'https://api.x.ai',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/xai/, ''),
+      }
+    }
+  }
 })

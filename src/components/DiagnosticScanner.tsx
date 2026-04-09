@@ -47,18 +47,22 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
       try {
         const base64 = (reader.result as string).split(',')[1]
         setProgress(60)
-        
+
         const data = await analyzeCrop(base64)
         setAnalysis(data)
         await saveResult(data)
-        
+
         setProgress(100)
+        // Give time for the progress bar to animate to 100%
+        await new Promise(resolve => setTimeout(resolve, 1000))
+
         setScanning(false)
         setResult('complete')
-      } catch (err) {
+      } catch (err: any) {
         console.error("Gemini Scan Failed:", err)
         setScanning(false)
         setProgress(0)
+        alert(err.message || "Scan failed. Please try again.")
       }
     }
     reader.readAsDataURL(file)
@@ -87,13 +91,13 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
 
   return (
     <GlassCard className="rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden group border-white/5 hover:border-primary/20 transition-all">
-      <input 
-        type="file" 
-        ref={fileInputRef} 
-        className="hidden" 
-        accept="image/*" 
-        capture="environment" 
-        onChange={handleImageCapture} 
+      <input
+        type="file"
+        ref={fileInputRef}
+        className="hidden"
+        accept="image/*"
+        capture="environment"
+        onChange={handleImageCapture}
       />
 
       <div className="absolute top-0 right-0 p-8 text-white/5 opacity-20 group-hover:opacity-40 transition-opacity">
@@ -110,8 +114,8 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
           </div>
 
           <div className="space-y-4">
-            <div 
-              className="p-6 rounded-[2rem] bg-white/5 border border-white/10 hover:border-primary/30 transition-all cursor-pointer group/scan" 
+            <div
+              className="p-6 rounded-[2rem] bg-white/5 border border-white/10 hover:border-primary/30 transition-all cursor-pointer group/scan"
               onClick={triggerFilePicker}
             >
               <div className="flex items-center justify-between mb-4">
@@ -125,12 +129,12 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
                   <Upload size={18} />
                 </div>
               </div>
-              
+
               <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
-                <motion.div 
-                  initial={{ width: 0 }} 
-                  animate={{ width: `${progress}%` }} 
-                  className="h-full bg-primary shadow-[0_0_15px_rgba(108,58,250,0.5)]" 
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  className="h-full bg-primary shadow-[0_0_15px_rgba(108,58,250,0.5)]"
                 />
               </div>
               <div className="mt-2 flex justify-between text-[10px] font-mono text-white/40 uppercase tracking-widest">
@@ -140,11 +144,11 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <ConfidenceMetric 
-                label={analysis?.disease || "Detection"} 
-                value={analysis?.confidence ? analysis.confidence * 100 : 0} 
-                status={analysis?.confidence > 0.8 ? "Critical" : "Safe"} 
-                delay={0.1} 
+              <ConfidenceMetric
+                label={analysis?.disease || "Detection"}
+                value={analysis?.confidence ? analysis.confidence * 100 : 0}
+                status={analysis?.confidence > 0.8 ? "Critical" : "Safe"}
+                delay={0.1}
               />
               <ConfidenceMetric label="Status" value={result ? 100 : 0} status="Normal" delay={0.2} />
             </div>
@@ -154,7 +158,7 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
         <div className="flex flex-col justify-center">
           <AnimatePresence mode="wait">
             {!result ? (
-              <motion.div 
+              <motion.div
                 key="placeholder"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -165,7 +169,7 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
                 <div className="relative">
                   <Camera size={64} className="mb-4" />
                   {scanning && (
-                    <motion.div 
+                    <motion.div
                       animate={{ top: ['0%', '100%', '0%'] }}
                       transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                       className="absolute left-0 right-0 h-0.5 bg-primary shadow-[0_0_10px_rgba(108,58,250,0.8)]"
@@ -175,7 +179,7 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
                 <p className="font-bold tracking-widest text-xs uppercase">Scan a Leaf to Begin</p>
               </motion.div>
             ) : (
-              <motion.div 
+              <motion.div
                 key="result"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -184,24 +188,24 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
                 <div className="absolute -top-12 -right-12 text-red-500/5 rotate-12">
                   <AlertTriangle size={240} />
                 </div>
-                
+
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-6 font-mono text-red-500 font-bold text-sm">
                     <AlertTriangle size={18} />
                     <span>DISEASE ALERT [ACTION REQUIRED]</span>
                   </div>
-                  
+
                   <h3 className="text-3xl font-bold mb-4 tracking-tight">{analysis?.disease} Identified</h3>
                   <p className="text-white/80 mb-8 leading-relaxed text-lg">
                     We detected **{analysis?.disease}** on your {analysis?.cropName}. This requires immediate attention.
                   </p>
-                  
+
                   <div className="flex flex-col sm:flex-row gap-4">
                     <button className="flex-1 py-5 bg-primary text-white font-bold rounded-2xl hover:bg-primary/90 transition-all shadow-[0_15px_40px_rgba(108,58,250,0.4)] flex items-center justify-center gap-2 group">
                       TREATMENT PLAN
                       <CheckCircle2 size={18} className="group-hover:translate-x-1 transition-transform" />
                     </button>
-                    <button 
+                    <button
                       onClick={handleShare}
                       className="px-8 py-5 bg-white/5 border border-white/10 text-white font-bold rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center gap-2 group"
                     >
@@ -210,7 +214,7 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
                   </div>
 
                   <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
-                    <ResultShareCard 
+                    <ResultShareCard
                       ref={shareCardRef}
                       cropName={analysis?.cropName}
                       disease={analysis?.disease}
@@ -232,9 +236,9 @@ export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }
 function ConfidenceMetric({ label, value, status, delay }: { label: string, value: number, status: string, delay: number }) {
   const isCritical = status === 'Critical'
   const isWarning = status === 'Warning'
-  
+
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay }}
@@ -246,4 +250,4 @@ function ConfidenceMetric({ label, value, status, delay }: { label: string, valu
       </div>
     </motion.div>
   )
-          }
+}

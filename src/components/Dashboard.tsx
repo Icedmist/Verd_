@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Onboarding } from './Onboarding'
 import { Auth } from './Auth'
 import { motion } from 'framer-motion'
-import { Info, ArrowRight, Plane as Drone, Globe, Code2, ShieldCheck, Zap, Leaf } from 'lucide-react'
+import { Info, ArrowRight, Plane as Drone, Globe, Code2, ShieldCheck, Zap, Leaf, Smartphone } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { GlassCard } from './ui/GlassCard'
 import { cn } from '../lib/utils'
@@ -145,6 +145,40 @@ export function Dashboard({
               </div>
             </GlassCard>
           </motion.div>
+        </div>
+
+        {/* Platform Selection Banner */}
+        <div className="mb-32">
+          <GlassCard className="rounded-[2.5rem] p-8 border-white/5 bg-primary/5 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-8 text-white/5 opacity-20 group-hover:opacity-40 transition-opacity">
+              <Smartphone size={160} />
+            </div>
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="flex items-center gap-6">
+                <div className="p-4 rounded-3xl bg-primary/20 text-primary shadow-[0_0_30px_rgba(0,214,177,0.2)]">
+                  <Smartphone size={32} />
+                </div>
+                <div>
+                  <h2 className="text-3xl font-bold italic tracking-tighter mb-2">VERD IS BETTER ON MOBILE</h2>
+                  <p className="text-white/60 text-lg leading-relaxed max-w-xl">
+                    Experience real-time field diagnostics with our dedicated Android application. Optimized for low-latency AI inference and offline field tracking.
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                <a 
+                  href="https://github.com/Jibex-Banks/_verd/releases/download/Verd_Andriod/Verd.apk" 
+                  className="px-10 py-5 bg-primary text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl hover:scale-105 transition-all shadow-[0_15px_40px_rgba(0,214,177,0.3)] flex items-center justify-center gap-3"
+                >
+                  Download APK
+                  <ArrowRight size={14} />
+                </a>
+                <button className="px-10 py-5 bg-white/5 border border-white/10 text-white font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl hover:bg-white/10 transition-all">
+                  Continue on Web
+                </button>
+              </div>
+            </div>
+          </GlassCard>
         </div>
 
         <div className="max-w-xl mx-auto mb-32">

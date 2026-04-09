@@ -7,12 +7,14 @@ import { GlassCard } from './ui/GlassCard'
 import { ResultShareCard } from './ui/ResultShareCard'
 import { db, auth } from '../lib/firebase'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { analyzeCrop } from '../lib/gemini'
 
 export function DiagnosticScanner({ theme }: { theme: 'bitget' | 'greenfamily' }) {
   const [scanning, setScanning] = useState(false)
   const [progress, setProgress] = useState(0)
   const [result, setResult] = useState<null | 'complete'>(null)
   const shareCardRef = useRef<HTMLDivElement>(null)
+  const [analysis, setAnalysis] = useState<any>(null);
 
   const saveResult = async () => {
     if (!auth.currentUser) return

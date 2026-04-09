@@ -1,11 +1,14 @@
-{
+ {
+  "name": "verd",
+  "private": true,
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
-   "dependencies": {
+  "dependencies": {
     "@google/generative-ai": "^0.21.0",
     "@paper-design/shaders-react": "^0.0.72",
     "clsx": "^2.1.1",
@@ -30,4 +33,4 @@
     "typescript": "^5.9.3",
     "vite": "^6.4.1"
   }
-}
+ }

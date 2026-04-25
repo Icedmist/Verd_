@@ -8,6 +8,7 @@ import { GlassCard } from './ui/GlassCard'
 import { cn } from '../lib/utils'
 import { DiagnosticScanner } from './DiagnosticScanner'
 import DailyTip from './DailyTip'
+import { LiveDroneDemo } from './LiveDroneDemo'
 
 interface DashboardProps {
   theme: 'bitget' | 'greenfamily'
@@ -246,6 +247,15 @@ export function Dashboard({
               </div>
             </GlassCard>
           </motion.div>
+        </div>
+
+        {/* Live Drone Demo Section */}
+        <div className="mb-32">
+          <div className="mb-12">
+            <h2 className="text-4xl font-bold italic tracking-tighter uppercase mb-2">Live <span className="text-primary not-italic font-black">Drone</span> Field Analysis</h2>
+            <p className="text-white/40 text-sm max-w-xl">Experience the power of our real-time aerial diagnostic engine. Upload a drone capture to see the neural grid in action.</p>
+          </div>
+          <LiveDroneDemo />
         </div>
 
         {/* Expanded Onboarding Flow */}
